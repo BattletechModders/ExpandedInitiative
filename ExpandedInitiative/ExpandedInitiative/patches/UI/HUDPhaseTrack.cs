@@ -9,12 +9,11 @@ namespace ExpandedInitiative {
     [HarmonyPatch(typeof(CombatHUDPhaseTrack), "RefreshPhaseColors")]
     public static class CombatHUDPhaseTrack_RefreshPhaseColors {
         public static bool Prefix(CombatHUDPhaseTrack __instance, bool isPlayer, Hostility hostility, int ___currentPhase, CombatHUDPhaseBar[] ___phaseBars) {
-            Mod.Log.Debug("CHUDPT::RPC - entered.");
+            Mod.Log.Trace("CHUDPT::RPC - entered.");
 
             if (__instance == null || ___phaseBars == null) { return true; }
             if (!ModState.Combat.TurnDirector.IsInterleaved) { return true; }
 
-            // TODO: FIX HARDCODED VALUE
             // Reconcile phase (from 1 - X) with display (X to 1)
             int initNum = (Mod.MaxPhase + 1) - ___currentPhase;
             int[] phaseBounds = PhaseHelper.CalcPhaseIconBounds(___currentPhase);

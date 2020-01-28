@@ -24,7 +24,6 @@ namespace ExpandedInitiative {
 
             // Normalize phase to initiative values
             int currentInit = (Mod.MaxPhase + 1) - currentPhase;
-            
             int midPoint = currentInit;
             if (midPoint + 2 > Mod.MaxPhase || midPoint +1 > Mod.MaxPhase) {
                 midPoint = Mod.MaxPhase - 2;
@@ -33,8 +32,24 @@ namespace ExpandedInitiative {
             }
 
             int[] bounds = new int[] { midPoint +2, midPoint +1, midPoint, midPoint -1, midPoint -2 };
-            //Mod.Log.Info($"For phase {currentPhase}, init bounds are: {bounds[0]} to {bounds[4]}");
+            Mod.Log.Trace($"For phase {currentPhase}, init bounds are: {bounds[0]} to {bounds[4]}");
+         
             return bounds;
+        }
+
+        // Normalizes tonnage to a static init phase.
+        public static int TonnageToPhase(int tonnage) {
+            int initPhase = Mod.MaxPhase;
+            if (tonnage < 20) { initPhase = Mod.MinPhase; } 
+            else if (tonnage <= 25) { initPhase = 2; }
+            else if (tonnage <= 35) { initPhase = 3; }
+            else if (tonnage <= 45) { initPhase = 4; }
+            else if (tonnage <= 55) { initPhase = 5; }
+            else if (tonnage <= 65) { initPhase = 6; }
+            else if (tonnage <= 75) { initPhase = 7; }
+            else if (tonnage <= 90) { initPhase = 8; } 
+            else if (tonnage <= 100) { initPhase = 9; }
+            return initPhase;
         }
     }
 }

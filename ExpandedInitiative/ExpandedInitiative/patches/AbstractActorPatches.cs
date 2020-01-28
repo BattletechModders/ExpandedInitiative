@@ -1,8 +1,5 @@
 ﻿using BattleTech;
-using BattleTech.UI;
 using Harmony;
-using ExpandedInitiative.Helper;
-using System;
 using us.frostraptor.modUtils;
 
 namespace ExpandedInitiative {
