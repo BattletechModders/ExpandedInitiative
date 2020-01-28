@@ -36,12 +36,12 @@ namespace ExpandedInitiative {
         public const string LT_LC_TT_SUMMARY = "LANCE_TEXT_SUMMARY";
 
         public Dictionary<string, string> LocalizedText = new Dictionary<string, string>() {
-            { LT_TT_BASE, "  <b>BASE</b>: {0}" },
-            { LT_TT_COMPONENT, "  <b>COMPONENTS</b>: {0:+0;-#}" },
-            { LT_TT_LANCE, "  <b>LANCE</b>: {0:+0;-#}" },
-            { LT_TT_PILOT, "  <b>PILOT</b>: {0:+0;-#}" },
-            { LT_MB_TT_SUMMARY, "<b>INITIATIVE SUMMARY</b>\n{0}\n<b>TOTAL</b>: {1:+0;-#}" },
-            { LT_LC_TT_SUMMARY, "<b>INITIATIVE SUMMARY</b>\n{0}\n<b>TOTAL</b>: {1:+0;-#}" }
+            { LT_TT_BASE, "  Base: {0}" },
+            { LT_TT_COMPONENT, "  Components: <color=#{0}>{1:+0;-#}</color>" },
+            { LT_TT_LANCE, "  Lance: <color=#{0}>{1:+0;-#}</color>" },
+            { LT_TT_PILOT, "  Pilot: <color=#{0}>{1:+0;-#}</color>" },
+            { LT_MB_TT_SUMMARY, "<b>Initiative Modifiers</b>\n{0}\n<b>TOTAL</b>: {1}" },
+            { LT_LC_TT_SUMMARY, "<b>Initiative Modifiers</b>\n{0}\n<b>TOTAL</b>: {1}" }
         };
 
         // Colors for the UI elements

@@ -36,7 +36,10 @@ namespace ExpandedInitiative {
 
                 // Any bonuses from equipment
                 int componentBonus = UnitHelper.GetNormalizedComponentModifier(___selectedMech);
-                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentBonus }).ToString());
+                string componentColor = "FFFFFF";
+                if (componentBonus > 0) { componentColor = "00FF00"; }
+                if (componentBonus < 0) { componentColor = "FF0000"; }
+                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString());
                 Mod.Log.Debug($"Component bonus is: {componentBonus}");
 
                 // No Lance bonus
@@ -90,23 +93,30 @@ namespace ExpandedInitiative {
 
                 // Any bonuses from equipment
                 int componentBonus = UnitHelper.GetNormalizedComponentModifier(__instance.SelectedMech.MechDef);
-                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentBonus }).ToString()); 
+                string componentColor = "FFFFFF";
+                if (componentBonus > 0) { componentColor = "00FF00"; }
+                if (componentBonus < 0) { componentColor = "FF0000"; }
+                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString()); 
                 Mod.Log.Debug($"Component bonus is: {componentBonus}");
+
+                // --- LANCE ---
+                int lanceBonus = 0;
+                if (___LC != null) {
+                    lanceBonus = ___LC.lanceInitiativeModifier;
+                }
+                string lanceColor = "FFFFFF";
+                if (lanceBonus > 0) { lanceColor = "00FF00"; }
+                if (lanceBonus < 0) { lanceColor = "FF0000"; }
+                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_LANCE], new object[] { lanceColor, lanceBonus }).ToString());
 
                 // --- PILOT ---
                 // TODO: Get pilot modifiers from abilities - coordinate with BD
                 Pilot selectedPilot = __instance.SelectedPilot.Pilot;
                 int pilotBonus = 0;
-                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_PILOT], new object[] { pilotBonus }).ToString());
-
-                // --- LANCE ---
-                string lanceColor = "FFFFFF";
-                int lanceBonus = 0;
-                if (___LC != null) {
-                    lanceBonus = ___LC.lanceInitiativeModifier;
-                    lanceColor = ___LC.lanceInitiativeModifier >= 0 ? "00FF00" : "FF0000";
-                }
-                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_LANCE], new object[] { lanceColor, lanceBonus}).ToString());
+                string pilotColor = "FFFFFF";
+                if (pilotBonus > 0) { pilotColor = "00FF00"; }
+                if (pilotBonus < 0) { pilotColor = "FF0000"; }
+                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_PILOT], new object[] { pilotColor, pilotBonus }).ToString());
 
                 // --- Badge ---
                 int summaryInitLabel = initLabelVal + componentBonus + pilotBonus + lanceBonus;
