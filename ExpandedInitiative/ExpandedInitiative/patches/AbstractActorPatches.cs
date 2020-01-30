@@ -52,12 +52,12 @@ namespace ExpandedInitiative {
                     if (initiative > Mod.MaxPhase) {
                         // This looks weird, but it's the only place we can intercept a negative init that I've found.
                         if (__instance != null) { __instance.Initiative = Mod.MaxPhase; }
-                        Mod.Log.Info($"AbstractActor:InitiativeToString - ERROR - Bad initiative of {initiative} detected!");
+                        Mod.Log.Error($"Bad initiative of {initiative} detected for actor: {CombatantUtils.Label(__instance)}! Setting to {Mod.MaxPhase}");
                         __result = "1";
                     } else if (initiative < Mod.MinPhase) {
                         // This looks weird, but it's the only place we can intercept a negative init that I've found.
                         if (__instance != null) { __instance.Initiative = Mod.MinPhase; }
-                        Mod.Log.Info($"AbstractActor:InitiativeToString - ERROR - Bad initiative of {initiative} detected!");
+                        Mod.Log.Error($"Bad initiative of {initiative} detected for actor: {CombatantUtils.Label(__instance)}! Setting to {Mod.MinPhase}");
                         __result = "10";
                     }
                     break;
