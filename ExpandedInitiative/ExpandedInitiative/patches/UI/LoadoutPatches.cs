@@ -113,6 +113,19 @@ namespace ExpandedInitiative {
                 // TODO: Get pilot modifiers from abilities - coordinate with BD
                 Pilot selectedPilot = __instance.SelectedPilot.Pilot;
                 int pilotBonus = 0;
+                foreach (Ability ability in selectedPilot.PassiveAbilities) {
+                    foreach(EffectData effectData in ability.Def.EffectData) {
+                        if (effectData.effectType == EffectType.StatisticEffect && effectData.statisticData != null && effectData.statisticData.statName == "BaseInitiative") {
+                            int mod = Int32.Parse(effectData.statisticData.modValue) * -1;
+                            if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Add) {
+                                pilotBonus += mod;
+                            } else if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Subtract) {
+                                pilotBonus -= mod;
+                            }
+                        }
+                    }
+                }
+
                 string pilotColor = "FFFFFF";
                 if (pilotBonus > 0) { pilotColor = "00FF00"; }
                 if (pilotBonus < 0) { pilotColor = "FF0000"; }
