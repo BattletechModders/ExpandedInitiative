@@ -17,17 +17,17 @@ namespace ExpandedInitiative {
             // Reconcile phase (from 1 - X) with display (X to 1)
             int initNum = (Mod.MaxPhase + 1) - ___currentPhase;
             int[] phaseBounds = PhaseHelper.CalcPhaseIconBounds(___currentPhase);
-            Mod.Log.Debug($" For currentPhase: {___currentPhase}  phaseBounds are: [ {phaseBounds[0]} {phaseBounds[1]} {phaseBounds[2]} {phaseBounds[3]} {phaseBounds[4]} ]");
+            Mod.Log.Trace($" For currentPhase: {___currentPhase}  phaseBounds are: [ {phaseBounds[0]} {phaseBounds[1]} {phaseBounds[2]} {phaseBounds[3]} {phaseBounds[4]} ]");
 
             for (int i = 0; i < 5; i++) {
                 if (phaseBounds[i] > initNum) {
-                    Mod.Log.Debug($" Setting phase: {phaseBounds[i]} as past phase.");
+                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as past phase.");
                     ___phaseBars[i].IndicatePastPhase();
                 } else if (phaseBounds[i] == initNum) {
-                    Mod.Log.Debug($" Setting phase: {phaseBounds[i]} as current phase.");
+                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as current phase.");
                     ___phaseBars[i].IndicateCurrentPhase(isPlayer, hostility);
                 } else {
-                    Mod.Log.Debug($" Setting phase: {phaseBounds[i]} as future phase.");
+                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as future phase.");
                     ___phaseBars[i].IndicateFuturePhase(isPlayer, hostility);
                 }
                 ___phaseBars[i].Text.SetText($"{phaseBounds[i]}");
