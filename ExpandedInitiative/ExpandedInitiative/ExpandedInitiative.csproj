@@ -40,9 +40,6 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>E:\steam\SteamApps\common\BATTLETECH\BattleTech_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="CustomComponents">
-      <HintPath>E:\steam\SteamApps\common\BATTLETECH\Mods\CustomComponents\CustomComponents.dll</HintPath>
-    </Reference>
     <Reference Include="IRBTModUtils">
       <HintPath>E:\steam\SteamApps\common\BATTLETECH\Mods\IRBTModUtils\IRBTModUtils.dll</HintPath>
     </Reference>

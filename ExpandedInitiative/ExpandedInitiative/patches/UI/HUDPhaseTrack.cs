@@ -40,7 +40,7 @@ namespace ExpandedInitiative {
             if (phaseBounds[4] != Mod.MinPhase) {
                 ___phaseBars[4].Text.SetText("F");
             }
-                        
+
             return false;
         }
     }

@@ -11,8 +11,8 @@ namespace ExpandedInitiative {
 
     // === CombatHUDPortrait === : The mechwarrior picture in the bottom tray
 
-   // Corrects the init overlay displayed on the Mechwarrior
-   [HarmonyPatch(typeof(CombatHUDPortrait), "Init")]
+    // Corrects the init overlay displayed on the Mechwarrior
+    [HarmonyPatch(typeof(CombatHUDPortrait), "Init")]
     [HarmonyPatch(new Type[] { typeof(CombatGameState), typeof(CombatHUD), typeof(UnityEngine.UI.LayoutElement), typeof(HBSDOTweenToggle) })]
     public static class CombatHUDPortrait_Init {
         public static void Postfix(CombatHUDPortrait __instance, ref TextMeshProUGUI ___ioText, ref DOTweenAnimation ___initiativeOverlay) {
