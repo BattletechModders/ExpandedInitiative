@@ -21,12 +21,11 @@ namespace ExpandedInitiative.patches {
         }
     }
 
-    //[HarmonyPatch(typeof(TurnDirector), "OnCombatGameDestroyed")]
-    //public static class TurnDirector_OnCombatGameDestroyed {
-    //    public static void Postfix(TurnDirector __instance) {
-    //        Mod.Log.Trace("TD:OCGD:post - entered.");
-    //        Mod.Log.Debug($" TurnDirector - Combat complete, destroying initiative map.");
-    //        ActorInitiativeHolder.OnCombatComplete();
-    //    }
-    //}
+    [HarmonyPatch(typeof(TurnDirector), "BeginNewRound")]
+    public static class TurnDirector_BeginNewRound {
+        public static void Postfix(int round) {
+            Mod.Log.Debug($"  == Beginning round: {round} ==");
+        }
+    }
+
 }

@@ -87,6 +87,7 @@ namespace ExpandedInitiative {
         public static void Postfix(AbstractActor __instance, ref int __result, StatCollection ___statCollection) {
             Mod.Log.Trace("AA:BI - entered.");
 
+            Mod.Log.Debug($"Actor:({CombatantUtils.Label(__instance)}) has raw result: {__result}");
             if (__instance.Combat.TurnDirector.IsInterleaved) {
                 int baseInit = ___statCollection.GetValue<int>("BaseInitiative");
                 int phaseMod = ___statCollection.GetValue<int>("PhaseModifier");
@@ -99,14 +100,35 @@ namespace ExpandedInitiative {
                     Mod.Log.Info($"Actor:({CombatantUtils.Label(__instance)}) being set to {Mod.MaxPhase} due to BaseInit:{baseInit} + PhaseMod:{phaseMod}");
                     __result = Mod.MaxPhase;
                 } else {
-                    __result = modifiedInit;
                     Mod.Log.Info($"Actor:({CombatantUtils.Label(__instance)}) has stats BaseInit:{baseInit} + PhaseMod:{phaseMod} = modifiedInit:{modifiedInit}.");
+                    __result = modifiedInit;
                 }
             } else {
                 Mod.Log.Info($"Actor:({CombatantUtils.Label(__instance)}) is non-interleaved, returning phase: {Mod.MaxPhase}.");
                 __result = Mod.MaxPhase;
             }
 
+        }
+    }
+
+    [HarmonyPatch(typeof(AbstractActor), "ForceUnitToLastPhase")]
+    public static class AbstractActor_ForceUnitToLastPhase {
+        public static void Postfix(AbstractActor __instance) {
+            Mod.Log.Info($" FORCING ACTOR: {CombatantUtils.Label(__instance)} TO LAST COMBAT ROUND!");
+        }
+    }
+
+    [HarmonyPatch(typeof(AbstractActor), "ForceUnitOnePhaseDown")]
+    public static class AbstractActor_ForceUnitOnePhaseDown {
+        public static void Postfix(AbstractActor __instance) {
+            Mod.Log.Info($" FORCING ACTOR: {CombatantUtils.Label(__instance)} ONE PHASE DOWN!");
+        }
+    }
+
+    [HarmonyPatch(typeof(AbstractActor), "ForceUnitOnePhaseUp")]
+    public static class AbstractActor_ForceUnitOnePhaseUp {
+        public static void Postfix(AbstractActor __instance) {
+            Mod.Log.Info($" FORCING ACTOR: {CombatantUtils.Label(__instance)} ONE PHASE UP!");
         }
     }
 
