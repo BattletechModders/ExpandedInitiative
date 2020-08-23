@@ -32,7 +32,7 @@ namespace ExpandedInitiative {
             }
 
             int[] bounds = new int[] { midPoint +2, midPoint +1, midPoint, midPoint -1, midPoint -2 };
-            Mod.Log.Trace($"For phase {currentPhase}, init bounds are: {bounds[0]} to {bounds[4]}");
+            Mod.Log.Trace?.Write($"For phase {currentPhase}, init bounds are: {bounds[0]} to {bounds[4]}");
          
             return bounds;
         }

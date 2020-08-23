@@ -21,7 +21,7 @@ namespace ExpandedInitiative {
                 }
             }
 
-            Mod.Log.Debug($"Normalized BaseInit for mechDef:{mechDef.Name} is unitInit:{unitInit}");
+            Mod.Log.Debug?.Write($"Normalized BaseInit for mechDef:{mechDef.Name} is unitInit:{unitInit}");
             return unitInit;
         }
     }

@@ -11,7 +11,7 @@ namespace ExpandedInitiative.patches {
     public static class Mech_InitEffectStats {
         public static void Postfix(Mech __instance) {
             int initPhase = PhaseHelper.TonnageToPhase((int)Math.Ceiling(__instance.tonnage));
-            Mod.Log.Debug($"Setting baseInit for mech: {CombatantUtils.Label(__instance)} to {initPhase}");
+            Mod.Log.Debug?.Write($"Setting baseInit for mech: {CombatantUtils.Label(__instance)} to {initPhase}");
 
             // We have to remove the stat, then set it to the default value we want. We do this because when the history is reverted (from effect expiriation) 
             //   it reverts to the value initally set on the statistic
@@ -24,7 +24,7 @@ namespace ExpandedInitiative.patches {
     public static class Vehicle_InitEffectStats {
         public static void Postfix(Vehicle __instance) {
             int initPhase = PhaseHelper.TonnageToPhase((int)Math.Ceiling(__instance.tonnage));
-            Mod.Log.Debug($"Setting baseInit for vehicle: {CombatantUtils.Label(__instance)} to {initPhase}");
+            Mod.Log.Debug?.Write($"Setting baseInit for vehicle: {CombatantUtils.Label(__instance)} to {initPhase}");
             __instance.StatCollection.Set<int>(ModStats.BaseInitiative, initPhase);
         }
     }
@@ -42,7 +42,7 @@ namespace ExpandedInitiative.patches {
                 init = Mod.Config.TurretPhases.UnitHeavy;
             } 
          
-            Mod.Log.Debug($"Setting baseInit for turret: {CombatantUtils.Label(__instance)} to {init}");
+            Mod.Log.Debug?.Write($"Setting baseInit for turret: {CombatantUtils.Label(__instance)} to {init}");
             __instance.StatCollection.Set<int>(ModStats.BaseInitiative, init);
         }
     }

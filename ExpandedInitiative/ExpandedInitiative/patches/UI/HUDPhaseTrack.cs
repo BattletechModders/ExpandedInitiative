@@ -9,7 +9,7 @@ namespace ExpandedInitiative {
     [HarmonyPatch(typeof(CombatHUDPhaseTrack), "RefreshPhaseColors")]
     public static class CombatHUDPhaseTrack_RefreshPhaseColors {
         public static bool Prefix(CombatHUDPhaseTrack __instance, bool isPlayer, Hostility hostility, int ___currentPhase, CombatHUDPhaseBar[] ___phaseBars) {
-            Mod.Log.Trace("CHUDPT::RPC - entered.");
+            Mod.Log.Trace?.Write("CHUDPT::RPC - entered.");
 
             if (__instance == null || ___phaseBars == null) { return true; }
             if (!ModState.Combat.TurnDirector.IsInterleaved) { return true; }
@@ -17,17 +17,17 @@ namespace ExpandedInitiative {
             // Reconcile phase (from 1 - X) with display (X to 1)
             int initNum = (Mod.MaxPhase + 1) - ___currentPhase;
             int[] phaseBounds = PhaseHelper.CalcPhaseIconBounds(___currentPhase);
-            Mod.Log.Trace($" For currentPhase: {___currentPhase}  phaseBounds are: [ {phaseBounds[0]} {phaseBounds[1]} {phaseBounds[2]} {phaseBounds[3]} {phaseBounds[4]} ]");
+            Mod.Log.Trace?.Write($" For currentPhase: {___currentPhase}  phaseBounds are: [ {phaseBounds[0]} {phaseBounds[1]} {phaseBounds[2]} {phaseBounds[3]} {phaseBounds[4]} ]");
 
             for (int i = 0; i < 5; i++) {
                 if (phaseBounds[i] > initNum) {
-                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as past phase.");
+                    Mod.Log.Trace?.Write($" Setting phase: {phaseBounds[i]} as past phase.");
                     ___phaseBars[i].IndicatePastPhase();
                 } else if (phaseBounds[i] == initNum) {
-                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as current phase.");
+                    Mod.Log.Trace?.Write($" Setting phase: {phaseBounds[i]} as current phase.");
                     ___phaseBars[i].IndicateCurrentPhase(isPlayer, hostility);
                 } else {
-                    Mod.Log.Trace($" Setting phase: {phaseBounds[i]} as future phase.");
+                    Mod.Log.Trace?.Write($" Setting phase: {phaseBounds[i]} as future phase.");
                     ___phaseBars[i].IndicateFuturePhase(isPlayer, hostility);
                 }
                 ___phaseBars[i].Text.SetText($"{phaseBounds[i]}");
@@ -49,22 +49,22 @@ namespace ExpandedInitiative {
     [HarmonyPatch(new Type[] { typeof(CombatHUDIconTracker), typeof(int) })]
     public static class CombatHUDPhaseTrack_SetTrackerPhase {
         public static bool Prefix(CombatHUDPhaseTrack __instance, CombatHUDIconTracker tracker, int phase, int ___currentPhase, List<CombatHUDPhaseIcons> ___PhaseIcons) {
-            Mod.Log.Trace($"CHUDPT:STP - entered at phase: {phase}.");
+            Mod.Log.Trace?.Write($"CHUDPT:STP - entered at phase: {phase}.");
 
             int[] bounds = PhaseHelper.CalcPhaseIconBounds(___currentPhase);
             int phaseAsInit = (Mod.MaxPhase + 1) - phase;
-            Mod.Log.Trace($"Phase {phase} is init {phaseAsInit} within currentPhase: {___currentPhase} with bounds: {bounds[0]}-{bounds[4]}");
+            Mod.Log.Trace?.Write($"Phase {phase} is init {phaseAsInit} within currentPhase: {___currentPhase} with bounds: {bounds[0]}-{bounds[4]}");
 
             if (phaseAsInit > bounds[1]) {
-                Mod.Log.Trace($"  -- Phase icon is higher than {bounds[1]}, setting to P phase.");
+                Mod.Log.Trace?.Write($"  -- Phase icon is higher than {bounds[1]}, setting to P phase.");
                 ___PhaseIcons[0].AddIconTrackerToPhase(tracker);
             } else if (phaseAsInit < bounds[3]) {
-                Mod.Log.Trace($"  -- Phase icon is higher than {bounds[3]}, setting to F phase.");
+                Mod.Log.Trace?.Write($"  -- Phase icon is higher than {bounds[3]}, setting to F phase.");
                 ___PhaseIcons[4].AddIconTrackerToPhase(tracker);
             } else {
                 for (int i = 0; i < 5; i++) {
                     if (bounds[i] == phaseAsInit) {
-                        Mod.Log.Trace($"  -- Setting phase icon for phaseAsInit: {phaseAsInit} / bounds: {bounds[i]} at index {i}");
+                        Mod.Log.Trace?.Write($"  -- Setting phase icon for phaseAsInit: {phaseAsInit} / bounds: {bounds[i]} at index {i}");
                         ___PhaseIcons[i].AddIconTrackerToPhase(tracker);
                     }
                 }

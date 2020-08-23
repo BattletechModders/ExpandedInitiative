@@ -21,9 +21,9 @@ namespace ExpandedInitiative.patches {
         }
 
         private static bool Prefix(ref float __result, AbstractActor unit, AbstractActor target, Vector3 targetPosition, int pipsRemoved) {
-            Mod.Log.Trace("AE:ADFP:pre - entered.");
+            Mod.Log.Trace?.Write("AE:ADFP:pre - entered.");
 
-            Mod.Log.Trace($"  ---- AE_ADFP: Building list.");
+            Mod.Log.Trace?.Write($"  ---- AE_ADFP: Building list.");
             List<AbstractActor> list = new List<AbstractActor>();
             Dictionary<int, List<AbstractActor>> dictionary = new Dictionary<int, List<AbstractActor>>();
             int i;
@@ -31,7 +31,7 @@ namespace ExpandedInitiative.patches {
                 dictionary[i] = new List<AbstractActor>();
             }
 
-            Mod.Log.Trace($"  ---- AE_ADFP: Mapping lance to init.");
+            Mod.Log.Trace?.Write($"  ---- AE_ADFP: Mapping lance to init.");
             for (int j = 0; j < unit.lance.unitGuids.Count; j++) {
                 string text = unit.lance.unitGuids[j];
                 if (!(text == unit.GUID)) {
@@ -41,7 +41,7 @@ namespace ExpandedInitiative.patches {
                 }
             }
 
-            Mod.Log.Trace($"  ---- AE_ADFP: Mapping all actors.");
+            Mod.Log.Trace?.Write($"  ---- AE_ADFP: Mapping all actors.");
             int currentPhase = unit.Combat.TurnDirector.CurrentPhase;
             for (int k = 0; k < dictionary[currentPhase].Count; k++) {
                 AbstractActor abstractActor = dictionary[currentPhase][k];
@@ -50,7 +50,7 @@ namespace ExpandedInitiative.patches {
                 }
             }
 
-            Mod.Log.Trace($"  ---- AE_ADFP: actors for init");
+            Mod.Log.Trace?.Write($"  ---- AE_ADFP: actors for init");
             i = currentPhase;
             while (target.Initiative != i) {
                 i++;
@@ -63,12 +63,12 @@ namespace ExpandedInitiative.patches {
                 }
             }
 
-            Mod.Log.Trace($"  ---- AE_ADFP: Calulating");
+            Mod.Log.Trace?.Write($"  ---- AE_ADFP: Calulating");
             float num = 0f;
             float num2 = 0f;
             int evasivePipsCurrent = target.EvasivePipsCurrent;
             int evasivePipsCurrent2 = Mathf.Max(0, evasivePipsCurrent - pipsRemoved);
-            Mod.Log.Debug($"  ---- AE_ADFP: Assumes we can remove: {evasivePipsCurrent2} pips ");
+            Mod.Log.Debug?.Write($"  ---- AE_ADFP: Assumes we can remove: {evasivePipsCurrent2} pips ");
             for (int m = 0; m < list.Count; m++) {
                 AbstractActor abstractActor2 = list[m];
                 for (int n = 0; n < abstractActor2.Weapons.Count; n++) {

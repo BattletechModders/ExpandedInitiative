@@ -16,7 +16,7 @@ namespace ExpandedInitiative {
     public static class MechBayMechInfoWidget_SetInitiative {
         public static void Postfix(MechBayMechInfoWidget __instance, MechDef ___selectedMech,
             GameObject ___initiativeObj, TextMeshProUGUI ___initiativeText, HBSTooltip ___initiativeTooltip) {
-            Mod.Log.Trace("MBMIW:SI:post - entered.");
+            Mod.Log.Trace?.Write("MBMIW:SI:post - entered.");
 
             if (___initiativeObj == null || ___initiativeText == null) {
                 return;
@@ -40,7 +40,7 @@ namespace ExpandedInitiative {
                 if (componentBonus > 0) { componentColor = "00FF00"; }
                 if (componentBonus < 0) { componentColor = "FF0000"; }
                 details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString());
-                Mod.Log.Debug($"Component bonus is: {componentBonus}");
+                Mod.Log.Debug?.Write($"Component bonus is: {componentBonus}");
 
                 // No Lance bonus
                 // No Pilot bonus
@@ -71,7 +71,7 @@ namespace ExpandedInitiative {
     public static class LanceLoadoutSlot_RefreshInitiativeData {
         public static void Postfix(LanceLoadoutSlot __instance, GameObject ___initiativeObj, TextMeshProUGUI ___initiativeText,
             UIColorRefTracker ___initiativeColor, HBSTooltip ___initiativeTooltip, LanceConfiguratorPanel ___LC) {
-            Mod.Log.Trace("LLS:RID:post - entered.");
+            Mod.Log.Trace?.Write("LLS:RID:post - entered.");
 
             if (___initiativeObj == null || ___initiativeText == null || ___initiativeColor == null || ___initiativeTooltip == null) {
                 return;
@@ -97,7 +97,7 @@ namespace ExpandedInitiative {
                 if (componentBonus > 0) { componentColor = "00FF00"; }
                 if (componentBonus < 0) { componentColor = "FF0000"; }
                 details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString()); 
-                Mod.Log.Debug($"Component bonus is: {componentBonus}");
+                Mod.Log.Debug?.Write($"Component bonus is: {componentBonus}");
 
                 // --- LANCE ---
                 int lanceBonus = 0;

@@ -1,9 +1,9 @@
 ﻿using Harmony;
+using IRBTModUtils.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using us.frostraptor.modUtils.logging;
 
 namespace ExpandedInitiative {
     public class Mod {
@@ -11,7 +11,7 @@ namespace ExpandedInitiative {
         public const string HarmonyPackage = "us.frostraptor.ExpandedInitiative";
         public const string LogName = "expanded_initiative";
 
-        public static IntraModLogger Log;
+        public static DeferringLogger Log;
         public static string ModDir;
         public static ModConfig Config;
 
@@ -32,14 +32,14 @@ namespace ExpandedInitiative {
                 Config.InitializeColors();
             }
 
-            Log = new IntraModLogger(modDirectory, Mod.LogName, Config.Debug, Config.Trace);
+            Log = new DeferringLogger(modDirectory, Mod.LogName, Config.Debug, Config.Trace);
 
             Assembly asm = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
-            Log.Info($"Assembly version: {fvi.ProductVersion}");
+            Log.Info?.Write($"Assembly version: {fvi.ProductVersion}");
 
-            Log.Debug($"ModDir is:{modDirectory}");
-            Log.Debug($"mod.json settings are:({settingsJSON})");
+            Log.Debug?.Write($"ModDir is:{modDirectory}");
+            Log.Debug?.Write($"mod.json settings are:({settingsJSON})");
             Mod.Config.LogConfig();
 
             var harmony = HarmonyInstance.Create(HarmonyPackage);
