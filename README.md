@@ -2,7 +2,7 @@
 This is a mod for the [HBS BattleTech](http://battletechgame.com/) game that divides each round of play into 10 initiatives phases instead of the normal 5. Units are organized into brackets by their tonnage, with every 10 tons being a new step in the bracket. Thus units will go in phase:
 
 | Phase | Tonnage | Notes |
-| ----- | ------- | |
+| ----- | ------- | -- |
 | 10    | < 20    | |
 | 9     | 20-25   | |
 | 8     | 30-35   | Light Turrets |
