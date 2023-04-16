@@ -2,7 +2,7 @@
     "Name": "ExpandedInitiative",
     "Enabled": true,
 	"Hidden": true,
-    "Version": "0.2.1",
+    "Version": "2.0.0",
     "Description": "Expands initiative turns from 5 to 10.",
     "Author": "IceRaptor",
     "Website": "https://github.com/IceRaptor/ExpandedInitiative",
