@@ -1,24 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExpandedInitiative {
+namespace ExpandedInitiative
+{
 
-    public static class ModIcons {
+    public static class ModIcons
+    {
         public const string Stopwatch = "@ei_stopwatch";
     }
 
-    public static class ModStats {
+    public static class ModStats
+    {
         public const string BaseInitiative = "BaseInitiative";
     }
 
-    public class ModConfig {
+    public class ModConfig
+    {
         // If true, extra logging will be printed
         public bool Debug = false;
 
         // If true, all the logs will be printed
         public bool Trace = false;
 
-        public class TurretPhaseOpts {
+        public class TurretPhaseOpts
+        {
             public int UnitLight = 3;
             public int UnitMedium = 5;
             public int UnitHeavy = 7;
@@ -89,7 +94,8 @@ namespace ExpandedInitiative {
         public Color EnemyUnactivated;
         public Color EnemyAlreadyActivated;
 
-        public void InitializeColors() {
+        public void InitializeColors()
+        {
             FriendlyUnactivated = new Color(ColorFriendlyUnactivated[0], ColorFriendlyUnactivated[1], ColorFriendlyUnactivated[2], ColorFriendlyUnactivated[3]);
             FriendlyAlreadyActivated = new Color(ColorFriendlyAlreadyActivated[0], ColorFriendlyAlreadyActivated[1], ColorFriendlyAlreadyActivated[2], ColorFriendlyAlreadyActivated[3]);
 
@@ -103,7 +109,8 @@ namespace ExpandedInitiative {
             EnemyAlreadyActivated = new Color(ColorEnemyAlreadyActivated[0], ColorEnemyAlreadyActivated[1], ColorEnemyAlreadyActivated[2], ColorEnemyAlreadyActivated[3]);
         }
 
-        public void LogConfig() {
+        public void LogConfig()
+        {
             Mod.Log.Info?.Write("=== MOD CONFIG BEGIN ===");
             Mod.Log.Info?.Write($"  DEBUG:{this.Debug} Trace:{this.Trace}");
 

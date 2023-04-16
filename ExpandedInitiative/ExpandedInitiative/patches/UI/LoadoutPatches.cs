@@ -1,31 +1,36 @@
-﻿using BattleTech;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using BattleTech.UI.Tooltips;
-using Harmony;
 using Localize;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace ExpandedInitiative {
+namespace ExpandedInitiative
+{
 
     // Sets the initiative value in the mech-bay
     [HarmonyPatch(typeof(MechBayMechInfoWidget), "SetInitiative")]
     [HarmonyPatch(new Type[] { })]
-    public static class MechBayMechInfoWidget_SetInitiative {
+    public static class MechBayMechInfoWidget_SetInitiative
+    {
         public static void Postfix(MechBayMechInfoWidget __instance, MechDef ___selectedMech,
-            GameObject ___initiativeObj, TextMeshProUGUI ___initiativeText, HBSTooltip ___initiativeTooltip) {
+            GameObject ___initiativeObj, TextMeshProUGUI ___initiativeText, HBSTooltip ___initiativeTooltip)
+        {
             Mod.Log.Trace?.Write("MBMIW:SI:post - entered.");
 
-            if (___initiativeObj == null || ___initiativeText == null) {
+            if (___initiativeObj == null || ___initiativeText == null)
+            {
                 return;
             }
 
-            if (___selectedMech == null) {
+            if (___selectedMech == null)
+            {
                 ___initiativeObj.SetActive(true);
                 ___initiativeText.SetText("-");
-            } else {
+            }
+            else
+            {
                 List<string> details = new List<string>();
 
                 // Static initiative from tonnage
@@ -68,20 +73,26 @@ namespace ExpandedInitiative {
     //  invert the values so they reflect the phase IDs, not the actual value
     [HarmonyPatch(typeof(LanceLoadoutSlot), "RefreshInitiativeData")]
     [HarmonyPatch(new Type[] { })]
-    public static class LanceLoadoutSlot_RefreshInitiativeData {
+    public static class LanceLoadoutSlot_RefreshInitiativeData
+    {
         public static void Postfix(LanceLoadoutSlot __instance, GameObject ___initiativeObj, TextMeshProUGUI ___initiativeText,
-            UIColorRefTracker ___initiativeColor, HBSTooltip ___initiativeTooltip, LanceConfiguratorPanel ___LC) {
+            UIColorRefTracker ___initiativeColor, HBSTooltip ___initiativeTooltip, LanceConfiguratorPanel ___LC)
+        {
             Mod.Log.Trace?.Write("LLS:RID:post - entered.");
 
-            if (___initiativeObj == null || ___initiativeText == null || ___initiativeColor == null || ___initiativeTooltip == null) {
+            if (___initiativeObj == null || ___initiativeText == null || ___initiativeColor == null || ___initiativeTooltip == null)
+            {
                 return;
             }
 
             bool bothSelected = __instance.SelectedMech != null && __instance.SelectedPilot != null;
-            if (!bothSelected) {
+            if (!bothSelected)
+            {
                 ___initiativeText.SetText("-");
                 ___initiativeColor.SetUIColor(UIColor.MedGray);
-            } else {
+            }
+            else
+            {
                 // --- MECH ---
                 MechDef selectedMechDef = __instance.SelectedMech.MechDef;
                 List<string> details = new List<string>();
@@ -96,12 +107,13 @@ namespace ExpandedInitiative {
                 string componentColor = "FFFFFF";
                 if (componentBonus > 0) { componentColor = "00FF00"; }
                 if (componentBonus < 0) { componentColor = "FF0000"; }
-                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString()); 
+                details.Add(new Text(Mod.Config.LocalizedText[ModConfig.LT_TT_COMPONENT], new object[] { componentColor, componentBonus }).ToString());
                 Mod.Log.Debug?.Write($"Component bonus is: {componentBonus}");
 
                 // --- LANCE ---
                 int lanceBonus = 0;
-                if (___LC != null) {
+                if (___LC != null)
+                {
                     lanceBonus = ___LC.lanceInitiativeModifier;
                 }
                 string lanceColor = "FFFFFF";
@@ -113,13 +125,19 @@ namespace ExpandedInitiative {
                 // TODO: Get pilot modifiers from abilities - coordinate with BD
                 Pilot selectedPilot = __instance.SelectedPilot.Pilot;
                 int pilotBonus = 0;
-                foreach (Ability ability in selectedPilot.PassiveAbilities) {
-                    foreach(EffectData effectData in ability.Def.EffectData) {
-                        if (effectData.effectType == EffectType.StatisticEffect && effectData.statisticData != null && effectData.statisticData.statName == "BaseInitiative") {
+                foreach (Ability ability in selectedPilot.PassiveAbilities)
+                {
+                    foreach (EffectData effectData in ability.Def.EffectData)
+                    {
+                        if (effectData.effectType == EffectType.StatisticEffect && effectData.statisticData != null && effectData.statisticData.statName == "BaseInitiative")
+                        {
                             int mod = Int32.Parse(effectData.statisticData.modValue) * -1;
-                            if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Add) {
+                            if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Add)
+                            {
                                 pilotBonus += mod;
-                            } else if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Subtract) {
+                            }
+                            else if (effectData.statisticData.operation == StatCollection.StatOperation.Int_Subtract)
+                            {
                                 pilotBonus -= mod;
                             }
                         }
@@ -133,7 +151,7 @@ namespace ExpandedInitiative {
 
                 // --- Badge ---
                 int summaryInitLabel = initLabelVal + componentBonus + pilotBonus + lanceBonus;
-                if (summaryInitLabel > Mod.MaxPhase) { summaryInitLabel = Mod.MaxPhase; } 
+                if (summaryInitLabel > Mod.MaxPhase) { summaryInitLabel = Mod.MaxPhase; }
                 else if (summaryInitLabel < Mod.MinPhase) { summaryInitLabel = Mod.MinPhase; }
                 ___initiativeText.SetText($"{summaryInitLabel}");
                 ___initiativeText.color = Color.black;

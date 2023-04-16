@@ -1,12 +1,13 @@
-﻿using Harmony;
-using IRBTModUtils.Logging;
+﻿using IRBTModUtils.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ExpandedInitiative {
-    public class Mod {
+namespace ExpandedInitiative
+{
+    public class Mod
+    {
 
         public const string HarmonyPackage = "us.frostraptor.ExpandedInitiative";
         public const string LogName = "expanded_initiative";
@@ -19,16 +20,22 @@ namespace ExpandedInitiative {
         public const int MinPhase = 1;
         public static readonly Random Random = new Random();
 
-        public static void Init(string modDirectory, string settingsJSON) {
+        public static void Init(string modDirectory, string settingsJSON)
+        {
             ModDir = modDirectory;
 
             Exception configE;
-            try {
+            try
+            {
                 Config = JsonConvert.DeserializeObject<ModConfig>(settingsJSON);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 configE = e;
                 Config = new ModConfig();
-            } finally {
+            }
+            finally
+            {
                 Config.InitializeColors();
             }
 
@@ -42,8 +49,7 @@ namespace ExpandedInitiative {
             Log.Debug?.Write($"mod.json settings are:({settingsJSON})");
             Mod.Config.LogConfig();
 
-            var harmony = HarmonyInstance.Create(HarmonyPackage);
-            harmony.PatchAll(Assembly.GetExecutingAssembly());            
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), HarmonyPackage);
         }
 
     }
