@@ -8,12 +8,14 @@ namespace ExpandedInitiative
     [HarmonyPatch(typeof(CombatHUDPhaseTrack), "RefreshPhaseColors")]
     public static class CombatHUDPhaseTrack_RefreshPhaseColors
     {
-        public static bool Prefix(CombatHUDPhaseTrack __instance, bool isPlayer, Hostility hostility, int ___currentPhase, CombatHUDPhaseBar[] ___phaseBars)
+        public static void Prefix(ref bool __runOriginal, CombatHUDPhaseTrack __instance, bool isPlayer, Hostility hostility, int ___currentPhase, CombatHUDPhaseBar[] ___phaseBars)
         {
+            if (!__runOriginal) return;
+
             Mod.Log.Trace?.Write("CHUDPT::RPC - entered.");
 
-            if (__instance == null || ___phaseBars == null) { return true; }
-            if (!ModState.Combat.TurnDirector.IsInterleaved) { return true; }
+            if (__instance == null || ___phaseBars == null) { return; }
+            if (!ModState.Combat.TurnDirector.IsInterleaved) { return; }
 
             // Reconcile phase (from 1 - X) with display (X to 1)
             int initNum = (Mod.MaxPhase + 1) - ___currentPhase;
@@ -50,7 +52,7 @@ namespace ExpandedInitiative
                 ___phaseBars[4].Text.SetText("F");
             }
 
-            return false;
+            __runOriginal = false;
         }
     }
 
@@ -58,8 +60,10 @@ namespace ExpandedInitiative
     [HarmonyPatch(new Type[] { typeof(CombatHUDIconTracker), typeof(int) })]
     public static class CombatHUDPhaseTrack_SetTrackerPhase
     {
-        public static bool Prefix(CombatHUDPhaseTrack __instance, CombatHUDIconTracker tracker, int phase, int ___currentPhase, List<CombatHUDPhaseIcons> ___PhaseIcons)
+        public static void  Prefix(ref bool __runOriginal, CombatHUDPhaseTrack __instance, CombatHUDIconTracker tracker, int phase, int ___currentPhase, List<CombatHUDPhaseIcons> ___PhaseIcons)
         {
+            if (!__runOriginal) return;
+
             Mod.Log.Trace?.Write($"CHUDPT:STP - entered at phase: {phase}.");
 
             int[] bounds = PhaseHelper.CalcPhaseIconBounds(___currentPhase);
@@ -88,7 +92,7 @@ namespace ExpandedInitiative
                 }
             }
 
-            return false;
+            __runOriginal = false;
         }
     }
 

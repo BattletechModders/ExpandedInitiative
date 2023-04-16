@@ -12,17 +12,13 @@ namespace ExpandedInitiative.patches
      *   However, there are suspicions that this behavior pushes the AI towards non-ranged attack behaviors. To allow testing of that theory, this 
      *     method replaces the logic to support all phases in this mod.
      */
-    [HarmonyPatch()]
+    [HarmonyPatch(typeof(AttackEvaluator), "AdditionalDamageFromFriendsGainedByAttackingEvasiveTarget")]
     public static class AttackEvaluator_AdditionalDamageFromFriendsGainedByAttackingEvasiveTarget
     {
-
-        public static MethodInfo TargetMethod()
+        private static void Prefix(ref bool __runOriginal, ref float __result, AbstractActor unit, AbstractActor target, Vector3 targetPosition, int pipsRemoved)
         {
-            return AccessTools.Method(typeof(AttackEvaluator), "AdditionalDamageFromFriendsGainedByAttackingEvasiveTarget");
-        }
+            if (!__runOriginal) return;
 
-        private static bool Prefix(ref float __result, AbstractActor unit, AbstractActor target, Vector3 targetPosition, int pipsRemoved)
-        {
             Mod.Log.Trace?.Write("AE:ADFP:pre - entered.");
 
             Mod.Log.Trace?.Write($"  ---- AE_ADFP: Building list.");
@@ -99,7 +95,7 @@ namespace ExpandedInitiative.patches
             target.EvasivePipsCurrent = evasivePipsCurrent;
             __result = num - num2;
 
-            return false;
+            __runOriginal = false;
         }
     }
 }
